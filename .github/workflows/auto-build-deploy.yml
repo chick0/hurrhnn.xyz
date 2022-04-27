@@ -1,0 +1,56 @@
+name: Automatic building and tagging
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Installing requirements
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y build-essential curl python3
+          curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash --
+          sudo apt-get install -y node.js
+          
+          npm install -g yarn
+          
+      - name: Checking out
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PRIVATE_TOKEN }}
+          
+      - name: Building sources and packaging
+        id: vars
+        run: | 
+          yarn install
+          yarn build
+          python3 dist.py
+          
+          git_branch=${GITHUB_REF#refs/heads/}
+          echo "::set-output name=git_branch::${GITHUB_REF#refs/heads/}"
+          
+          git_hash=$(git rev-parse --short "$GITHUB_SHA")
+          echo "::set-output name=git_hash::$(git rev-parse --short HEAD)"
+
+          mv dist.zip $git_branch-$git_hash.zip
+      
+      - name: Tag
+        run: |
+          git config user.name "hurrhnn"
+          git config user.email "20sunrin022@sunrint.hs.kr"
+          GIT_COMMITTER_DATE="$(git show --format=%aD | head -1)" git tag ${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }}
+          git push origin ${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }}
+      
+      - name: Release
+        uses: ncipollo/release-action@v1
+        with:
+          name: ${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }}
+          tag: ${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }}
+          body: Automatically built ${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }} sources.
+          artifacts: "${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }}.zip"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
