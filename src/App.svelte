@@ -30,11 +30,14 @@
             <p>HTML is not a programming language.
             The "<b on:click={() => { counter += 1 }}>M</b>" stands for "Markup".
             Generally, a programming language allows you to describe some sort of process of doing something, whereas HTML is a way of adding context and structure to text.</p>
+
             <p>If you're looking to add more alphabet soup to your CV, don't classify them at all.
             Just put them in a big pile called "Technologies" or whatever you like.
             Remember, however, that anything you list is fair game for a question.</p>
+
             <p>HTML is so common that I'd expect almost any technology person to already know it (although not stuff like CSS and so on), so you might consider not listing every initialism you've ever come across.
             I tend to regard CVs listing too many things as suspicious, so I ask more questions to weed out the stuff that shouldn't be listed. :)</p>
+
             <p>However, if your HTML experience includes serious web design stuff including Ajax, JavaScript, and so on, you might talk about those in your "Experience" section.</p>
         </div>
 
