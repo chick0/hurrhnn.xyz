@@ -10,47 +10,48 @@
 	let counter = 0;
     let keys = Object.keys(images);
     let urls = images[keys[Math.floor(Math.random() * keys.length)]];
-    let col = `col-md-${Number(12 / urls.length)} col-12`;
+    let col = `is-${Number(12 / urls.length)}`;
 </script>
 
-<div class="container">
-    <h1 class="display-2 py-5">HTML is NOT a Programming Language!</h1>
+<section class="section">
+    <div class="container">
+        <h1 class="title is-1 has-text-white">HTML is NOT a Programming Language!</h1>
+        <p class="subtitle">
+            <a href="https://stackoverflow.com/a/145179" target="_blank" rel="noreferrer">HTML is NOT a Programming Language!</a>
+        </p>
 
-    <div class="py-3 row" style="text-align: center !important">
-    {#each urls as url }
-        <img class="{col}" alt="HTML is NOT a Programming Language" src="{url}">
-    {/each}
+        <div class="columns">
+        {#each urls as url }
+            <img class="column {col}" alt="HTML is NOT a Programming Language" src="{url}">
+        {/each}
+        </div>
+
+        <div class="content is-medium">
+            <p>HTML is not a programming language.
+            The "<b on:click={() => { counter += 1 }}>M</b>" stands for "Markup".
+            Generally, a programming language allows you to describe some sort of process of doing something, whereas HTML is a way of adding context and structure to text.</p>
+            <p>If you're looking to add more alphabet soup to your CV, don't classify them at all.
+            Just put them in a big pile called "Technologies" or whatever you like.
+            Remember, however, that anything you list is fair game for a question.</p>
+            <p>HTML is so common that I'd expect almost any technology person to already know it (although not stuff like CSS and so on), so you might consider not listing every initialism you've ever come across.
+            I tend to regard CVs listing too many things as suspicious, so I ask more questions to weed out the stuff that shouldn't be listed. :)</p>
+            <p>However, if your HTML experience includes serious web design stuff including Ajax, JavaScript, and so on, you might talk about those in your "Experience" section.</p>
+        </div>
+
+        <p>
+            <a class="button is-link is-large is-fullwidth" href="https://en.wikipedia.org/wiki/HTML" target="_blank" rel="noreferrer">Read more about  HTML</a>
+        </p>
+
+    {#if counter == 3}
+        <br>
+        <div class="columns">
+            <div class="column">
+                <a class="button is-danger is-large is-fullwidth" href="WOL.php" target="_self">WOL</a>
+            </div>
+            <div class="column">
+                <a class="button is-warning is-large is-fullwidth" href="https://hurrhnn.xyz/mirror/" target="_self">Mirror</a>
+            </div>
+        </div>
+    {/if}
     </div>
-
-    <div class="lead py-5">
-        HTML is not a programming language.
-        
-        The "<b on:click={() => { counter += 1 }}>M</b>" stands for "Markup".
-        
-        Generally, a programming language allows you to describe some sort of process of doing something, whereas HTML is a way of adding context and structure to text. 
-        
-        If you're looking to add more alphabet soup to your CV, don't classify them at all.
-        
-        Just put them in a big pile called "Technologies" or whatever you like.
-        
-        Remember, however, that anything you list is fair game for a question.
-        
-        HTML is so common that I'd expect almost any technology person to already know it (although not stuff like CSS and so on), so you might consider not listing every initialism you've ever come across.
-        
-        I tend to regard CVs listing too many things as suspicious, so I ask more questions to weed out the stuff that shouldn't be listed. :)
-
-        However, if your HTML experience includes serious web design stuff including Ajax, JavaScript, and so on, you might talk about those in your "Experience" section.
-    </div>
-
-    <div class="pb-5 d-grid">
-        <a class="btn btn-primary btn-lg" href="https://en.wikipedia.org/wiki/HTML" target="_blank" rel="noreferrer">About HTML</a>
-    </div>
-
-{#if counter == 3}
-    <div class="pb-5">
-        <a class="btn btn-danger btn-lg" href="WOL.php" target="_self">WOL</a>
-        
-        <a class="btn btn-light btn-lg" href="https://hurrhnn.xyz/mirror/" target="_self">Mirror</a>
-    </div>
-{/if}
-</div>
+</section>
