@@ -1,4 +1,4 @@
-name: Automatic building and tagging
+name: Automatic build and deploy.
 
 on:
   push:
@@ -8,6 +8,9 @@ on:
 jobs:
   CI:
     runs-on: ubuntu-latest
+    outputs:
+      git_branch: ${{ steps.vars.outputs.git_branch }}
+      git_hash: ${{ steps.vars.outputs.git_hash }}
     steps:
       - name: Installing requirements
         run: |
@@ -25,7 +28,7 @@ jobs:
           
       - name: Building sources and packaging
         id: vars
-        run: | 
+        run: |
           yarn install
           yarn build
           python3 dist.py
@@ -54,3 +57,10 @@ jobs:
           artifacts: "${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }}.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
 
+  CD:
+    needs: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sending an API Request
+        run: |
+          curl -X POST https://api.hurrhnn.xyz/web-fetch-upstream -H 'Content-Type: application/json' -d '{ "auth": "${{ secrets.AUTH }}", "releases": "${{ needs.CI.outputs.git_branch }}-${{ needs.CI.outputs.git_hash }}"}'
