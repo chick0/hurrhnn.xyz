@@ -1,4 +1,32 @@
 <script>
+    const alt = {
+        a: [
+            "A: What do you want? / B: I want to learn HTML programming language",
+            "A: HTML is not a programming language"
+        ],
+        b: [
+            "A: What programming language do you use?",
+            "B: HTML",
+            "A: Oh no",
+            "A: It's retarded"
+        ],
+        c: [
+            "A: FEAR NOT, LADY! I'LL SAVE YOU!",
+            "B: HTML IS THE *BEST* PROGRAMING LANGUAGE!",
+            "A: ...",
+            "A: yeah she was already dead when i found her / C: (writing the testimony of B)"
+        ],
+        d: [
+            "A: Kids(B,C), violence is never the answer",
+            "B: HTML is a Programming Language",
+            "A: ...",
+            "A: (hit B's face)"
+        ],
+        e: [
+            "A: No it doesn't affect my baby",
+            "*12 years layer* / B: (How to hack NASA with HTML)"
+        ]
+    };
     const images = {
         a: ["/assets/a/1.jpg", "/assets/a/2.jpg"],
         b: ["/assets/b/1.jpg", "/assets/b/2.jpg", "/assets/b/3.jpg", "/assets/b/4.jpg"],
@@ -9,8 +37,8 @@
 
 	let counter = 0;
     let keys = Object.keys(images);
-    let urls = images[keys[Math.floor(Math.random() * keys.length)]];
-    let col = `is-${Number(12 / urls.length)}`;
+    let id = keys[Math.floor(Math.random() * keys.length)];
+    let col = `is-${Number(12 / images[id].length)}`;
 </script>
 
 <section class="section">
@@ -21,8 +49,8 @@
         </p>
 
         <div class="columns">
-        {#each urls as url }
-            <img class="column {col}" alt="HTML is NOT a Programming Language" src="{url}">
+        {#each images[id] as url, index }
+            <img class="column {col}" alt="{alt[id][index]}" src="{url}">
         {/each}
         </div>
 
