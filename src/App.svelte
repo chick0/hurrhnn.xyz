@@ -80,9 +80,11 @@
                 <a class="button is-danger is-large is-fullwidth" href="WOL.php" target="_self">WOL</a>
             </div>
             <div class="column">
-                <a class="button is-warning is-large is-fullwidth" href="https://hurrhnn.xyz/mirror/" target="_self">Mirror</a>
+                <a class="button is-primary is-large is-fullwidth" href="https://status.hurrhnn.xyz/" target="_self">Status</a>
             </div>
         </div>
     {/if}
     </div>
 </section>
+
+<section class="section"></section>
