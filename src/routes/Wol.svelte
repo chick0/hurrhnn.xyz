@@ -29,7 +29,7 @@
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        body: document.getElementById("keypad").value,
+                        body: `password=${document.getElementById("keypad").value}`,
                     }).then((resp) => resp.text()).then((data) => {
                         if(data == '200'){
                             document.getElementById("keypad-display").innerText = "SUCCESS";
