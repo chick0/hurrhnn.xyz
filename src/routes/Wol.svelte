@@ -1,43 +1,57 @@
 <script>
-    let hideKeypad = false;
+    import { push } from "svelte-spa-router";
+    import Keyboard from "simple-keyboard";
+    import "simple-keyboard/build/css/index.css";
+    import "../wol.css";
 
-    let index = 0;
-    let keyStore = ['_', '_', '_', '_'];
-    const keyMap = [
-        ['1', '2', '3'],
-        ['4', '5', '6'],
-        ['7', '8', '9'],
-        [' ', '0', ' '],
-    ];
+    let keyboard = undefined;
+    setTimeout(keyboardInit, 80);
 
-    function appendKey(key){
-        if(index < 4){
-            keyStore[index] = key;
-            index += 1;
-        }
-        
-        if(index == 4){
-            hideKeypad = true;
+    function keyboardInit(){
+        keyboard = new Keyboard({
+            onChange: (input) => {
+                document.getElementById("keypad").value = input;
 
-            // check password
-            fetch('/WOL.php?work=do-wol', {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                },
-                body: keyStore.join(''),
-            }).then((resp) => resp.text()).then((data) => {
-                index = 0;
-                keyStore = ['_', '_', '_', '_'];
-                hideKeypad = false;
+                if(input.length == 0)
+                    document.getElementById("keypad-display").innerText = "_";
+                else
+                    document.getElementById("keypad-display").innerText = input;
 
-                if(data == '200'){
-                    alert("SUCCESS");
-                } else {
-                    alert("FAILED");
+                if(document.getElementById("keypad-display").classList.contains("has-text-danger"))
+                    document.getElementById("keypad-display").classList.remove("has-text-danger");
+            },
+            onKeyPress: (button) => {
+                if(button == `{enter}`){
+                    document.getElementById("keypad-block").style.display = "none";
+
+                    fetch('/WOL.php?work=do-wol', {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: document.getElementById("keypad").value,
+                    }).then((resp) => resp.text()).then((data) => {
+                        if(data == '200'){
+                            document.getElementById("keypad-display").innerText = "SUCCESS";
+                            document.getElementById("keypad-display").classList.add("has-text-success");
+
+                            setTimeout(() => {
+                                push("/");
+                            }, 2000);
+                        } else {
+                            keyboard.setInput("");
+                            document.getElementById("keypad-display").innerText = "FAILED";
+                            document.getElementById("keypad-display").classList.add("has-text-danger");
+                            document.getElementById("keypad-block").style.display = "block";
+                        }
+                    });
                 }
-            });
-        }
+            },
+            layout: {
+                default: ["1 2 3", "4 5 6", "7 8 9", "{bksp} 0 {enter}"],
+            },
+            theme: "hg-theme-default hg-layout-numeric numeric-theme"
+        });
     }
 </script>
 
@@ -45,38 +59,19 @@
     <div class="container">
         <h1 class="title is-1 has-text-white">WOL</h1>
         <p class="subtitle">PASSWORD REQUIRED</p>
-
-        <div class="block has-text-centered">
-            <h3 class="title is-3">
-                {keyStore.join(' ')}
-            </h3>
-        </div>
     </div>
 </section>
 
 <section class="section">
     <div class="container">
-    {#if hideKeypad == false}
-        <div class="columns is-centered">
-            <div class="column is-half">
-            {#each keyMap as keyLine}
-                <div class="columns is-narrow">
-                {#each keyLine as key}
-                    <div class="column has-text-centered">
-                    {#if key != ' '}
-                        <button
-                            class="button is-dark is-large"
-                            on:click={() => {appendKey(key);}}
-                        >
-                            {key}
-                        </button>
-                    {/if}
-                    </div>
-                {/each}
-                </div>
-            {/each}
-            </div>
+        <div class="block has-text-centered pb-4">
+            <h3 id="keypad-display" class="title is-3">_</h3>
         </div>
-    {/if}
+
+        <div class="block" id="keypad-block">
+            <input id="keypad" class="input" style="display:none">
+            <div class="simple-keyboard"></div>
+        </div>
     </div>
 </section>
+

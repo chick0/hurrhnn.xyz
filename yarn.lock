@@ -560,6 +560,11 @@ serialize-javascript@^4.0.0:
   dependencies:
     randombytes "^2.1.0"
 
+simple-keyboard@^3.4.111:
+  version "3.4.111"
+  resolved "https://registry.yarnpkg.com/simple-keyboard/-/simple-keyboard-3.4.111.tgz#661c1355934cb72ff4538e3199e904c3b7e4bf6f"
+  integrity sha512-ZtQ+rZZe+Ej7EMZvEdt0G2zQVd+nIJsZEFyCt+izv7NUfkMzEBm0uTEmPGmBgHCM4SWVdVHrr7LnCx2Z4bogxw==
+
 sirv-cli@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/sirv-cli/-/sirv-cli-2.0.2.tgz#4b25ff8dc577be41588357c1f87fbf264a1bba55"
