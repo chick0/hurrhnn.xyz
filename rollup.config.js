@@ -5,7 +5,7 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 import CleanCSS from 'clean-css';
-import { writeFileSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync } from 'fs';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -53,10 +53,14 @@ export default {
                     return new CleanCSS().minify(styles).styles;
                 }
 
+                const PATH = "./public/build";
+                if(!existsSync(PATH)){ mkdirSync(PATH); }
+
+                const CSS = PATH + "/bundle.css";
                 if(production === true){
-                    writeFileSync('./public/build/bundle.css', getMinifedStyle());
+                    writeFileSync(CSS, getMinifedStyle());
                 } else {
-                    writeFileSync('./public/build/bundle.css', styles);
+                    writeFileSync(CSS, styles);
                 }
             }
         }),
