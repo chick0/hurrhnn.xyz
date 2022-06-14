@@ -47,6 +47,7 @@ jobs:
           body: Automatically built ${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }} sources.
           artifacts: "${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }}.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
 
   CD:
     needs: CI
