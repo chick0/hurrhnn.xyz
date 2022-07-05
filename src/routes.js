@@ -1,10 +1,15 @@
+import { wrap } from "svelte-spa-router/wrap";
+
 import Home from "./routes/Home.svelte";
-import Wol from "./routes/Wol.svelte";
 
 // Routes
 export default {
     "/": Home,
-    "/wol": Wol,
+    "/wol": wrap({
+        asyncComponent: () => import("./routes/Wol.svelte"),
+    }),
 
-    "*": Home,
+    "*": wrap({
+        asyncComponent: () => import("./NotFound.svelte"),
+    }),
 };
