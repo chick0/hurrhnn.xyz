@@ -17,8 +17,9 @@
                 if (changed.length == 0) display.innerText = "_";
                 else display.innerText = changed;
 
-                if (display.classList.contains("has-text-danger"))
+                if (display.classList.contains("has-text-danger")) {
                     display.classList.remove("has-text-danger");
+                }
             },
             onKeyPress: (button) => {
                 if (button == `{enter}`) {
