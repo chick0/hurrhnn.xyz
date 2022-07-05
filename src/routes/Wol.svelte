@@ -1,48 +1,47 @@
 <script>
     import "../wol.css";
-    import "simple-keyboard/build/css/index.css";
     import { push } from "svelte-spa-router";
+    import { onMount } from "svelte";
     import Keyboard from "simple-keyboard";
 
+    let display = undefined;
+
+    let input = undefined;
     let keyboard = undefined;
-    setTimeout(keyboardInit, 80);
 
-    function keyboardInit() {
+    onMount(() => {
         keyboard = new Keyboard({
-            onChange: (input) => {
-                document.getElementById("keypad").value = input;
+            onChange: (changed) => {
+                input.value = changed;
 
-                if (input.length == 0) document.getElementById("keypad-display").innerText = "_";
-                else document.getElementById("keypad-display").innerText = input;
+                if (changed.length == 0) display.innerText = "_";
+                else display.innerText = changed;
 
-                if (document.getElementById("keypad-display").classList.contains("has-text-danger"))
-                    document.getElementById("keypad-display").classList.remove("has-text-danger");
+                if (display.classList.contains("has-text-danger"))
+                    display.classList.remove("has-text-danger");
             },
             onKeyPress: (button) => {
                 if (button == `{enter}`) {
-                    document.getElementById("keypad-block").style.display = "none";
-
                     fetch("/WOL.php?work=do-wol", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/x-www-form-urlencoded",
                         },
-                        body: `password=${document.getElementById("keypad").value}`,
+                        body: `password=${input.value}`,
                     })
                         .then((resp) => resp.text())
                         .then((data) => {
                             if (data == "200") {
-                                document.getElementById("keypad-display").innerText = "SUCCESS";
-                                document.getElementById("keypad-display").classList.add("has-text-success");
+                                display.innerText = "SUCCESS";
+                                display.classList.add("has-text-success");
 
                                 setTimeout(() => {
                                     push("/");
                                 }, 2000);
                             } else {
                                 keyboard.setInput("");
-                                document.getElementById("keypad-display").innerText = "FAILED";
-                                document.getElementById("keypad-display").classList.add("has-text-danger");
-                                document.getElementById("keypad-block").style.display = "block";
+                                display.innerText = "FAILED";
+                                display.classList.add("has-text-danger");
                             }
                         });
                 }
@@ -52,7 +51,7 @@
             },
             theme: "hg-theme-default hg-layout-numeric numeric-theme",
         });
-    }
+    });
 </script>
 
 <section class="section">
@@ -65,11 +64,11 @@
 <section class="section">
     <div class="container">
         <div class="block has-text-centered pb-4">
-            <h3 id="keypad-display" class="title is-3">_</h3>
+            <h3 class="title is-3" bind:this="{display}">_</h3>
         </div>
 
-        <div class="block" id="keypad-block">
-            <input id="keypad" class="input" style="display:none" />
+        <div class="block">
+            <input class="input" style="display:none" bind:this="{input}" />
             <div class="simple-keyboard"></div>
         </div>
     </div>
