@@ -1,10 +1,10 @@
-import Home from './routes/Home.svelte';
-import Wol from './routes/Wol.svelte';
+import Home from "./routes/Home.svelte";
+import Wol from "./routes/Wol.svelte";
 
 // Routes
 export default {
-    '/': Home,
-    '/wol': Wol,
+    "/": Home,
+    "/wol": Wol,
 
-    '*': Home,
+    "*": Home,
 };

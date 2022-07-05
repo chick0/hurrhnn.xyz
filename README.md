@@ -1,11 +1,5 @@
 # hurrhnn.xyz
 
-## Project setup
-```
-yarn install
-```
+website for @hurrhnn
 
-## Compiles app for production
-```
-yarn build
-```
+and HTML is NOT a Programming Language!

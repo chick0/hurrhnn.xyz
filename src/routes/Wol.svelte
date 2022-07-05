@@ -1,56 +1,56 @@
 <script>
+    import "../wol.css";
+    import "simple-keyboard/build/css/index.css";
     import { push } from "svelte-spa-router";
     import Keyboard from "simple-keyboard";
-    import "simple-keyboard/build/css/index.css";
-    import "../wol.css";
 
     let keyboard = undefined;
     setTimeout(keyboardInit, 80);
 
-    function keyboardInit(){
+    function keyboardInit() {
         keyboard = new Keyboard({
             onChange: (input) => {
                 document.getElementById("keypad").value = input;
 
-                if(input.length == 0)
-                    document.getElementById("keypad-display").innerText = "_";
-                else
-                    document.getElementById("keypad-display").innerText = input;
+                if (input.length == 0) document.getElementById("keypad-display").innerText = "_";
+                else document.getElementById("keypad-display").innerText = input;
 
-                if(document.getElementById("keypad-display").classList.contains("has-text-danger"))
+                if (document.getElementById("keypad-display").classList.contains("has-text-danger"))
                     document.getElementById("keypad-display").classList.remove("has-text-danger");
             },
             onKeyPress: (button) => {
-                if(button == `{enter}`){
+                if (button == `{enter}`) {
                     document.getElementById("keypad-block").style.display = "none";
 
-                    fetch('/WOL.php?work=do-wol', {
+                    fetch("/WOL.php?work=do-wol", {
                         method: "POST",
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
+                            "Content-Type": "application/x-www-form-urlencoded",
                         },
                         body: `password=${document.getElementById("keypad").value}`,
-                    }).then((resp) => resp.text()).then((data) => {
-                        if(data == '200'){
-                            document.getElementById("keypad-display").innerText = "SUCCESS";
-                            document.getElementById("keypad-display").classList.add("has-text-success");
+                    })
+                        .then((resp) => resp.text())
+                        .then((data) => {
+                            if (data == "200") {
+                                document.getElementById("keypad-display").innerText = "SUCCESS";
+                                document.getElementById("keypad-display").classList.add("has-text-success");
 
-                            setTimeout(() => {
-                                push("/");
-                            }, 2000);
-                        } else {
-                            keyboard.setInput("");
-                            document.getElementById("keypad-display").innerText = "FAILED";
-                            document.getElementById("keypad-display").classList.add("has-text-danger");
-                            document.getElementById("keypad-block").style.display = "block";
-                        }
-                    });
+                                setTimeout(() => {
+                                    push("/");
+                                }, 2000);
+                            } else {
+                                keyboard.setInput("");
+                                document.getElementById("keypad-display").innerText = "FAILED";
+                                document.getElementById("keypad-display").classList.add("has-text-danger");
+                                document.getElementById("keypad-block").style.display = "block";
+                            }
+                        });
                 }
             },
             layout: {
                 default: ["1 2 3", "4 5 6", "7 8 9", "{bksp} 0 {enter}"],
             },
-            theme: "hg-theme-default hg-layout-numeric numeric-theme"
+            theme: "hg-theme-default hg-layout-numeric numeric-theme",
         });
     }
 </script>
@@ -69,9 +69,8 @@
         </div>
 
         <div class="block" id="keypad-block">
-            <input id="keypad" class="input" style="display:none">
+            <input id="keypad" class="input" style="display:none" />
             <div class="simple-keyboard"></div>
         </div>
     </div>
 </section>
-
