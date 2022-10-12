@@ -1,0 +1,101 @@
+:root {
+    --background: #141414;
+    --color: #fff;
+    --red: #e94747;
+    --green: #49cd2e;
+    --blue: #0087ff;
+}
+
+html {
+    font-family: Pretendard, Noto Sans KR, sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    background-color: var(--background);
+    color: var(--color);
+    word-break: keep-all;
+}
+
+/* Container */
+.container {
+    text-align: left;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+div.container {
+    padding-top: 20px;
+    padding-bottom: 60px;
+}
+
+@media (min-width: 700px) {
+    .container {
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+}
+
+/* Heading */
+h1 {
+    font-size: 40px;
+    font-weight: 600;
+}
+
+/* Button display */
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.buttons > .button:not(:last-child) {
+    margin-right: 3px;
+}
+
+.buttons > .button {
+    margin-bottom: 3px;
+}
+
+/* Button */
+.button {
+    --background: #ffcc4d;
+    --text: #000;
+
+    display: inline-block;
+    text-decoration: none;
+    cursor: pointer;
+
+    color: var(--text);
+    background-color: var(--background);
+
+    font: inherit;
+    font-size: 20px;
+    padding: 10px;
+    border: 1px solid var(--background);
+    border-radius: 0.25rem;
+}
+
+.button:hover {
+    --background: #ffdb81;
+    background-color: var(--background);
+    border: 1px solid var(--background);
+}
+
+/* Fullwidth button */
+.button.max {
+    width: 100%;
+}
+
+/* etc.. */
+a {
+    text-decoration: underline 1px var(--blue);
+    color: var(--blue);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+blockquote {
+    padding: 5px;
+    border: 1px dashed var(--blue);
+    border-left: 3px solid var(--blue);
+}

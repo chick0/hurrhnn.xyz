@@ -1,25 +1,28 @@
 <script>
-    import "../wol.css";
-    import { push } from "svelte-spa-router";
     import { onMount } from "svelte";
+    import { push } from "svelte-spa-router";
     import Keyboard from "simple-keyboard";
+    import "styles/wol.css";
 
     let display = undefined;
 
     let input = undefined;
     let keyboard = undefined;
 
+    let status = 0;
+
     onMount(() => {
         keyboard = new Keyboard({
             onChange: (changed) => {
                 input.value = changed;
 
-                if (changed.length == 0) display.innerText = "_";
-                else display.innerText = changed;
-
-                if (display.classList.contains("has-text-danger")) {
-                    display.classList.remove("has-text-danger");
+                if (changed.length == 0) {
+                    display.innerText = "_";
+                } else {
+                    display.innerText = changed;
                 }
+
+                status = 0;
             },
             onKeyPress: (button) => {
                 if (button == `{enter}`) {
@@ -34,7 +37,7 @@
                         .then((data) => {
                             if (data == "200") {
                                 display.innerText = "SUCCESS";
-                                display.classList.add("has-text-success");
+                                status = 1;
 
                                 setTimeout(() => {
                                     push("/");
@@ -42,7 +45,7 @@
                             } else {
                                 keyboard.setInput("");
                                 display.innerText = "FAILED";
-                                display.classList.add("has-text-danger");
+                                status = 2;
                             }
                         });
                 }
@@ -55,22 +58,38 @@
     });
 </script>
 
-<section class="section">
-    <div class="container">
-        <h1 class="title is-1 has-text-white">WOL</h1>
-        <p class="subtitle">PASSWORD REQUIRED</p>
-    </div>
-</section>
+<div class="container">
+    <h1>WOL</h1>
+    <p>PASSWORD REQUIRED</p>
+</div>
 
-<section class="section">
-    <div class="container">
-        <div class="block has-text-centered pb-4">
-            <h3 class="title is-3" bind:this="{display}">_</h3>
-        </div>
+<div class="container">
+    <p class="{status == 1 ? 'green' : status == 2 ? 'red' : 'number'}" bind:this="{display}">_</p>
 
-        <div class="block">
-            <input class="input" style="display:none" bind:this="{input}" />
-            <div class="simple-keyboard"></div>
-        </div>
+    <div>
+        <input class="input" style="display:none" bind:this="{input}" />
+        <div class="simple-keyboard"></div>
     </div>
-</section>
+</div>
+
+<style>
+    div > p:first-child {
+        display: block;
+        text-align: center;
+        padding-bottom: 30px;
+        font-weight: 600;
+        font-size: 30px;
+    }
+
+    p.red {
+        color: var(--red);
+    }
+
+    p.green {
+        color: var(--green);
+    }
+
+    p.number {
+        letter-spacing: 3px;
+    }
+</style>

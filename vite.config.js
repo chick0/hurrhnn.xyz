@@ -1,25 +1,16 @@
+import path from "path";
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
-import purgecss from "@fullhuman/postcss-purgecss";
 
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [svelte()],
-
-    css: {
-        preprocessorOptions: {
-            scss: {
-                additionalData: '@use "src/variables.scss" as *;',
-            },
-        },
-
-        postcss: {
-            plugins: [
-                purgecss({
-                    content: ["./index.html", "./src/**/*.svelte"],
-                    safelist: ["html", "body", "button", "input"],
-                }),
-            ],
+    resolve: {
+        alias: {
+            src: path.resolve(__dirname) + "/src",
+            routes: path.resolve(__dirname) + "/src/routes",
+            styles: path.resolve(__dirname) + "/src/styles",
+            memes: path.resolve(__dirname) + "/src/memes",
         },
     },
 });

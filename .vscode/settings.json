@@ -1,0 +1,10 @@
+{
+    "files.exclude": {
+        ".git/": true,
+        ".github/": true,
+        ".vscode/": true,
+        ".yarn/": true,
+        "dist/": true,
+        "node_modules/": true
+    }
+}

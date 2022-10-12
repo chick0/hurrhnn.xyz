@@ -1,0 +1,14 @@
+@import "simple-keyboard/build/css/index.css";
+
+.numeric-theme {
+    padding: 0;
+    margin: auto;
+    background-color: var(--background);
+    max-width: 400px;
+}
+
+.simple-keyboard.hg-theme-default.numeric-theme .hg-button {
+    border-color: #cdcdcd;
+    background-color: #4a4a4a;
+    color: #cdcdcd;
+}

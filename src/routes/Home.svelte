@@ -1,108 +1,97 @@
 <script>
-    import { push } from "svelte-spa-router";
+    import { memes } from "src/memes.js";
 
-    const alt = {
-        a: [
-            "A: What do you want? / B: I want to learn HTML programming language",
-            "A: HTML is not a programming language",
-        ],
-        b: ["A: What programming language do you use?", "B: HTML", "A: Oh no", "A: It's retarded"],
-        c: [
-            "A: FEAR NOT, LADY! I'LL SAVE YOU!",
-            "B: HTML IS THE *BEST* PROGRAMING LANGUAGE!",
-            "A: ...",
-            "A: yeah she was already dead when i found her / C: (writing the testimony of B)",
-        ],
-        d: [
-            "A: Kids(B,C), violence is never the answer",
-            "B: HTML is a Programming Language",
-            "A: ...",
-            "A: (hit B's face)",
-        ],
-        e: ["A: No it doesn't affect my baby", "*12 years layer* / B: (How to hack NASA with HTML)"],
-    };
-    const images = {
-        a: ["/assets/a/1.jpg", "/assets/a/2.jpg"],
-        b: ["/assets/b/1.jpg", "/assets/b/2.jpg", "/assets/b/3.jpg", "/assets/b/4.jpg"],
-        c: ["/assets/c/1.jpg", "/assets/c/2.jpg", "/assets/c/3.jpg", "/assets/c/4.jpg"],
-        d: ["/assets/d/1.jpg", "/assets/d/2.jpg", "/assets/d/3.jpg", "/assets/d/4.jpg"],
-        e: ["/assets/e/1.jpg", "/assets/e/2.jpg"],
-    };
+    let meme = memes[Math.floor(Math.random() * memes.length)];
 
-    let counter = 0;
-    let keys = Object.keys(images);
-    let id = keys[Math.floor(Math.random() * keys.length)];
-    let col = `is-${Number(12 / images[id].length)}`;
+    let show_hidden_button = false;
+
+    function toggle() {
+        show_hidden_button = !show_hidden_button;
+        window.getSelection()?.removeAllRanges();
+    }
 </script>
 
-<section class="section">
-    <div class="container">
-        <h1 class="title is-1 has-text-white">HTML is NOT a Programming Language!</h1>
-        <p class="subtitle">
-            <a href="https://stackoverflow.com/a/145179" target="_blank" rel="noreferrer"
-                >HTML is NOT a Programming Language!</a>
+<div class="container">
+    <h1>HTML is NOT a Programming Language!</h1>
+
+    <div class="meme len-{meme.images.length}">
+        {#each meme.images as image}
+            <img src="{image.path}" alt="{image.alt}" title="{image.alt}" />
+        {/each}
+    </div>
+
+    <div class="content">
+        <p>
+            HTML is not a programming language. The "<b on:dblclick="{toggle}">M</b>" stands for "Markup". Generally, a
+            programming language allows you to describe some sort of process of doing something, whereas HTML is a way
+            of adding context and structure to text.
         </p>
-
-        <div class="columns">
-            {#each images[id] as url, index}
-                <img class="column {col}" alt="{alt[id][index]}" src="{url}" />
-            {/each}
-        </div>
-
-        <div class="content is-medium">
-            <p>
-                HTML is not a programming language. The "<b
-                    on:click="{() => {
-                        counter += 1;
-                    }}">M</b
-                >" stands for "Markup". Generally, a programming language allows you to describe some sort of process of
-                doing something, whereas HTML is a way of adding context and structure to text.
-            </p>
-
-            <p>
-                If you're looking to add more alphabet soup to your CV, don't classify them at all. Just put them in a
-                big pile called "Technologies" or whatever you like. Remember, however, that anything you list is fair
-                game for a question.
-            </p>
-
-            <p>
-                HTML is so common that I'd expect almost any technology person to already know it (although not stuff
-                like CSS and so on), so you might consider not listing every initialism you've ever come across. I tend
-                to regard CVs listing too many things as suspicious, so I ask more questions to weed out the stuff that
-                shouldn't be listed. :)
-            </p>
-
-            <p>
-                However, if your HTML experience includes serious web design stuff including Ajax, JavaScript, and so
-                on, you might talk about those in your "Experience" section.
-            </p>
-        </div>
 
         <p>
-            <a
-                class="button is-link is-large is-fullwidth"
-                href="https://en.wikipedia.org/wiki/HTML"
-                target="_blank"
-                rel="noreferrer">Read more about HTML</a>
+            If you're looking to add more alphabet soup to your CV, don't classify them at all. Just put them in a big
+            pile called "Technologies" or whatever you like. Remember, however, that anything you list is fair game for
+            a question.
         </p>
 
-        {#if counter == 3}
-            <br />
-            <div class="columns">
-                <div class="column">
-                    <button
-                        class="button is-danger is-large is-fullwidth"
-                        on:click="{() => {
-                            push('/wol');
-                        }}">WOL</button>
-                </div>
-                <div class="column">
-                    <a class="button is-primary is-large is-fullwidth" href="https://status.hurrhnn.xyz/" target="_self"
-                        >Status</a>
-                </div>
-            </div>
-        {/if}
-    </div>
-</section>
+        <p>
+            HTML is so common that I'd expect almost any technology person to already know it &#40;although not stuff
+            like CSS and so on&#41;, so you might consider not listing every initialism you've ever come across. I tend
+            to regard CVs listing too many things as suspicious, so I ask more questions to weed out the stuff that
+            shouldn't be listed. :&#41;
+        </p>
 
-<section class="section"></section>
+        <p>
+            However, if your HTML experience includes serious web design stuff including Ajax, JavaScript, and so on,
+            you might talk about those in your "Experience" section.
+        </p>
+
+        <p>
+            <a href="https://en.wikipedia.org/wiki/HTML" target="_blank">Read more about HTML</a>
+        </p>
+    </div>
+
+    {#if show_hidden_button == true}
+        <div class="buttons">
+            <a class="button" href="#/wol">WOL</a>
+            <a class="button" href="https://status.hurrhnn.xyz/">Status</a>
+        </div>
+    {/if}
+</div>
+
+<style>
+    .meme {
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        justify-content: center;
+    }
+
+    .meme > img {
+        padding: 0;
+        margin: 0;
+    }
+
+    @media (min-width: 700px) {
+        .meme > img:not(:last-child) {
+            margin-right: 10px;
+        }
+
+        .meme.len-2 > img {
+            width: calc((100% / 2) - (10px * 1));
+        }
+
+        .meme.len-4 > img {
+            width: calc((100% / 4) - (10px * 3));
+        }
+    }
+
+    .content > p {
+        margin-bottom: 20px;
+    }
+
+    .buttons > .button {
+        width: calc(50% - 3px);
+        text-align: center;
+    }
+</style>
