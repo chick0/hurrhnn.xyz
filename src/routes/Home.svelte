@@ -78,11 +78,11 @@
         }
 
         .meme.len-2 > img {
-            width: calc((100% / 2) - (10px * 1));
+            width: calc((100% / 2) - 10px);
         }
 
         .meme.len-4 > img {
-            width: calc((100% / 4) - (10px * 3));
+            width: calc((100% / 4) - 10px);
         }
     }
 
