@@ -85,16 +85,4 @@ export const memes = [
             },
         ],
     },
-    {
-        images: [
-            {
-                alt: "A: No it doesn't affect my baby",
-                path: "memes/e/1.jpg",
-            },
-            {
-                alt: "*12 years layer* / B: (How to hack NASA with HTML)",
-                path: "memes/e/2.jpg",
-            },
-        ],
-    },
 ];
