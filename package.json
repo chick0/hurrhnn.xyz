@@ -4,6 +4,7 @@
     "scripts": {
         "dev": "vite dev",
         "build": "vite build",
+        "postbuild": "node tools/dist.js",
         "preview": "vite preview",
         "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
@@ -14,6 +15,7 @@
         "@sveltejs/adapter-static": "^3.0.2",
         "@sveltejs/kit": "^2.5.18",
         "@sveltejs/vite-plugin-svelte": "^3.1.1",
+        "adm-zip": "^0.5.14",
         "svelte": "^4.2.18",
         "vite": "^5.3.3"
     },

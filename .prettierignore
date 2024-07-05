@@ -9,6 +9,7 @@ node_modules/
 # Ignore for build result
 build/
 src/app.html
+dist.zip
 
 # Ignore for GitHub Action (due to space indent)
 .github/workflows/*.yml
