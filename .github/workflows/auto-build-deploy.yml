@@ -1,4 +1,4 @@
-name: Automatic build and deploy.
+name: Automatic build and deploy
 
 on:
   push:
@@ -12,33 +12,59 @@ jobs:
       git_branch: ${{ steps.vars.outputs.git_branch }}
       git_hash: ${{ steps.vars.outputs.git_hash }}
     steps:          
-      - name: Checking out
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.PRIVATE_TOKEN }}
-          
-      - name: Building sources and packaging
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          run_install: false
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-prod-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: |
+          pnpm install --prod
+
+      - name: Build App
+        run: |
+          pnpm build 
+
+      - name: Packaging App
         id: vars
         run: |
-          yarn install
-          yarn build
-          python3 dist.py
-          
           git_branch=${GITHUB_REF#refs/heads/}
-          echo "::set-output name=git_branch::${GITHUB_REF#refs/heads/}"
-          
+          echo "git_branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
+
           git_hash=$(git rev-parse --short "$GITHUB_SHA")
-          echo "::set-output name=git_hash::$(git rev-parse --short HEAD)"
+          echo "git_hash=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
           mv dist.zip $git_branch-$git_hash.zip
-      
+
       - name: Tag
         run: |
           git config user.name "hurrhnn"
           git config user.email "20sunrin022@sunrint.hs.kr"
           GIT_COMMITTER_DATE="$(git show --format=%aD | head -1)" git tag ${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }}
           git push origin ${{ steps.vars.outputs.git_branch }}-${{ steps.vars.outputs.git_hash }}
-      
+
       - name: Release
         uses: ncipollo/release-action@v1
         with:
