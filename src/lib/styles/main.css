@@ -34,20 +34,6 @@ h1 {
     font-weight: 600;
 }
 
-/* Button display */
-.buttons {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.buttons > .button:not(:last-child) {
-    margin-right: 3px;
-}
-
-.buttons > .button {
-    margin-bottom: 3px;
-}
-
 /* Button */
 .button {
     --background: #ffcc4d;

@@ -2,6 +2,12 @@
     import Container from "$lib/props/Container.svelte"
     import Content from "$lib/props/Content.svelte"
     import Meme from "$lib/props/Meme.svelte"
+
+    let hiddenMenuFlag = false
+
+    function doubleClickHandler() {
+        hiddenMenuFlag = !hiddenMenuFlag
+    }
 </script>
 
 <Container>
@@ -11,9 +17,11 @@
 
     <Content>
         <p>
-            HTML is not a programming language. The "<b>M</b>" stands for "Markup". Generally, a
-            programming language allows you to describe some sort of process of doing something,
-            whereas HTML is a way of adding context and structure to text.
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            HTML is not a programming language. The "<b on:dblclick={doubleClickHandler}>M</b>"
+            stands for "Markup". Generally, a programming language allows you to describe some sort
+            of process of doing something, whereas HTML is a way of adding context and structure to
+            text.
         </p>
 
         <p>
@@ -39,4 +47,23 @@
             <a href="https://en.wikipedia.org/wiki/HTML" target="_blank">Read more about HTML</a>
         </p>
     </Content>
+
+    {#if hiddenMenuFlag}
+        <div class="menu-buttons">
+            <a class="button" href="/wol">WOL</a>
+            <a class="button" href="https://status.hurrhnn.xyz">Status</a>
+        </div>
+    {/if}
 </Container>
+
+<style>
+    .menu-buttons {
+        display: flex;
+        gap: 10px;
+    }
+
+    .menu-buttons a {
+        text-align: center;
+        width: 100%;
+    }
+</style>
