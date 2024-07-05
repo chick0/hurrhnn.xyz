@@ -1,28 +1,29 @@
+WIP
+
+<!-- 
 <script>
-    import { onMount } from "svelte";
-    import { push } from "svelte-spa-router";
-    import Keyboard from "simple-keyboard";
-    import "styles/wol.css";
+    import { onMount } from "svelte"
+    import { goto } from "$app/navigation"
+    import Keyboard from "simple-keyboard"
+    import "styles/wol.css"
 
-    let display = undefined;
+    let display = undefined
 
-    let input = undefined;
-    let keyboard = undefined;
+    let input = undefined
+    let keyboard = undefined
 
-    let status = 0;
+    let status = 0
 
     onMount(() => {
         keyboard = new Keyboard({
             onChange: (changed) => {
-                input.value = changed;
-
+                input.value = changed
                 if (changed.length == 0) {
-                    display.innerText = "_";
+                    display.innerText = "_"
                 } else {
-                    display.innerText = changed;
+                    display.innerText = changed
                 }
-
-                status = 0;
+                status = 0
             },
             onKeyPress: (button) => {
                 if (button == `{enter}`) {
@@ -36,40 +37,35 @@
                         .then((resp) => resp.text())
                         .then((data) => {
                             if (data == "200") {
-                                display.innerText = "SUCCESS";
-                                status = 1;
-
+                                display.innerText = "SUCCESS"
+                                status = 1
                                 setTimeout(() => {
-                                    push("/");
-                                }, 2000);
+                                    goto("/")
+                                }, 2000)
                             } else {
-                                keyboard.setInput("");
-                                display.innerText = "FAILED";
-                                status = 2;
+                                keyboard.setInput("")
+                                display.innerText = "FAILED"
+                                status = 2
                             }
-                        });
+                        })
                 }
             },
             layout: {
                 default: ["1 2 3", "4 5 6", "7 8 9", "{bksp} 0 {enter}"],
             },
             theme: "hg-theme-default hg-layout-numeric numeric-theme",
-        });
-    });
+        })
+    })
 </script>
 
-<div class="container">
-    <h1>WOL</h1>
-    <p>PASSWORD REQUIRED</p>
-</div>
+<h1>WOL</h1>
+<p>PASSWORD REQUIRED</p>
 
-<div class="container">
-    <p class="{status == 1 ? 'green' : status == 2 ? 'red' : 'number'}" bind:this="{display}">_</p>
+<p class={status == 1 ? "green" : status == 2 ? "red" : "number"} bind:this={display}>_</p>
 
-    <div>
-        <input class="input" style="display:none" bind:this="{input}" />
-        <div class="simple-keyboard"></div>
-    </div>
+<div>
+    <input class="input" style="display:none" bind:this={input} />
+    <div class="simple-keyboard"></div>
 </div>
 
 <style>
@@ -93,3 +89,4 @@
         letter-spacing: 3px;
     }
 </style>
+-->
