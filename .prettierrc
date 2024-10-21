@@ -1,7 +1,7 @@
 {
     "useTabs": false,
     "tabWidth": 4,
-    "semi": true,
+    "semi": false,
     "singleQuote": false,
     "trailingComma": "es5",
     "endOfLine": "lf",
@@ -9,8 +9,7 @@
     "bracketSpacing": true,
     "arrowParens": "always",
     "proseWrap": "never",
-    "printWidth": 120,
+    "printWidth": 100,
     "plugins": ["prettier-plugin-svelte"],
-    "svelteStrictMode": true,
-    "svelteAllowShorthand": false
+    "overrides": [{ "files": "*.svelte", "options": { "parser": "svelte" } }]
 }

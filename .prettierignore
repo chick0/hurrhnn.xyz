@@ -1,6 +1,18 @@
-.git/
-.github/
-.vscode/
-.yarn/
-dist/
+# Ignore files for pnpm
+pnpm-lock.yaml
+package-lock.json
 node_modules/
+
+# Ignore files for SvelteKit
+.svelte-kit/
+
+# Ignore for build result
+build/
+src/app.html
+dist.zip
+
+# Ignore for GitHub Action (due to space indent)
+.github/workflows/*.yml
+
+# README
+README.md

@@ -1,57 +1,37 @@
 :root {
     --background: #141414;
     --color: #fff;
-    --red: #e94747;
-    --green: #49cd2e;
     --blue: #0087ff;
 }
 
 html {
-    font-family: Pretendard, Noto Sans KR, sans-serif;
+    font-family:
+        Pretendard,
+        -apple-system,
+        BlinkMacSystemFont,
+        system-ui,
+        Roboto,
+        "Helvetica Neue",
+        "Segoe UI",
+        "Apple SD Gothic Neo",
+        "Noto Sans KR",
+        "Malgun Gothic",
+        "Apple Color Emoji",
+        "Segoe UI Emoji",
+        "Segoe UI Symbol",
+        sans-serif;
     font-size: 22px;
     font-weight: 400;
+    word-break: keep-all;
+
     background-color: var(--background);
     color: var(--color);
-    word-break: keep-all;
-}
-
-/* Container */
-.container {
-    text-align: left;
-    margin-left: 5%;
-    margin-right: 5%;
-}
-
-div.container {
-    padding-top: 20px;
-    padding-bottom: 60px;
-}
-
-@media (min-width: 700px) {
-    .container {
-        margin-left: 20%;
-        margin-right: 20%;
-    }
 }
 
 /* Heading */
 h1 {
     font-size: 40px;
     font-weight: 600;
-}
-
-/* Button display */
-.buttons {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.buttons > .button:not(:last-child) {
-    margin-right: 3px;
-}
-
-.buttons > .button {
-    margin-bottom: 3px;
 }
 
 /* Button */
