@@ -13,8 +13,6 @@ jobs:
       git_hash: ${{ steps.vars.outputs.git_hash }}
     steps:          
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.PRIVATE_TOKEN }}
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
@@ -45,7 +43,7 @@ jobs:
 
       - name: Build App
         run: |
-          pnpm build 
+          pnpm build
 
       - name: Packaging App
         id: vars
