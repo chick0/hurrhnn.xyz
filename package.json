@@ -17,7 +17,7 @@
         "@sveltejs/vite-plugin-svelte": "^3.1.2",
         "adm-zip": "^0.5.16",
         "svelte": "^4.2.19",
-        "vite": "^5.4.14"
+        "vite": "^5.4.19"
     },
     "devDependencies": {
         "@types/eslint": "^8.56.12",
