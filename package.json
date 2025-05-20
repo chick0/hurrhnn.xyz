@@ -13,7 +13,7 @@
     },
     "dependencies": {
         "@sveltejs/adapter-static": "^3.0.8",
-        "@sveltejs/kit": "^2.17.2",
+        "@sveltejs/kit": "^2.20.6",
         "@sveltejs/vite-plugin-svelte": "^3.1.2",
         "adm-zip": "^0.5.16",
         "svelte": "^4.2.19",
